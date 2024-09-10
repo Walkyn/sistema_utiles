@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../assets/js/tailwindcss.js"></script>
+    <script src="../../assets/js/flowbite.min.js"></script>
+    <link rel="stylesheet" href="../../assets/css/material-icons.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <script src="../../assets/js/sweetalert2.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Jakarta+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+    <title>Papeleria Angel</title>
+</head>
+
+<body class="flex flex-col h-screen">
+
+    <main id="dynamicContent" class="flex-1 transition-all duration-300 ml-60 md:ml-0">
+
+        <div class="w-full h-full flex items-center justify-center">
+            <!-- Formulario -->
+            <div class="w-full h-full bg-white p-6 rounded-2xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-2xl">Editar usuario</h2>
+                </div>
+        
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nombres</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="Bonnie">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Apellidos</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="Green">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">País</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="México">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Ciudad</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="San Francisco">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                        <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="+1 (234) 567 89">
+                    </div>
+                </div>
+        
+                <!-- Sección para Correo y Contraseña -->
+                <div class="flex flex-col md:flex-row gap-4 mt-4">
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700">Correo</label>
+                        <input type="email" class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="SanFrancisco@gmail.com">
+                    </div>
+                    <div class="flex-1 relative">
+                        <label class="block text-sm font-medium text-gray-700">Contraseña</label>
+                        <div class="relative">
+                            <input id="passwordInput" type="password"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 pr-10"
+                                placeholder="********">
+                            <button id="togglePassword" type="button"
+                                class="absolute inset-y-0 right-0 flex items-center h-full px-2 text-gray-500"
+                                onclick="togglePassword()">
+                                <i id="passwordIcon" class="material-icons">visibility</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        
+                <button class="mt-4 bg-slate-500 text-white px-8 py-2 rounded-md w-full md:w-1/2">
+                    <span class="material-icons mr-2">save</span>Guardar cambios
+                </button>
+            </div>
+        </div>
+
+    </main>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const passwordIcon = document.getElementById('passwordIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.textContent = 'visibility';
+            }
+        }
+        </script>
+        
+</body>
+
+</html>
+<div class="mt-2">
+    <input type="checkbox" id="enablePassword" name="enablePassword" class="mr-2">
+    <label for="enablePassword" class="text-base font-medium text-gray-700">Activar contraseña</label>
+</div>
+<script>
+    // Función para mostrar/ocultar contraseña
+    function togglePassword() {
+        const passwordInput = document.getElementById('user-password');
+        const passwordIcon = document.getElementById('passwordIcon');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            passwordIcon.textContent = 'visibility_off';
+        } else {
+            passwordInput.type = 'password';
+            passwordIcon.textContent = 'visibility';
+        }
+    }
+
+    // Función para activar/desactivar el campo de contraseña
+    document.getElementById('enablePassword').addEventListener('change', function () {
+        const passwordInput = document.getElementById('user-password');
+        passwordInput.disabled = !this.checked; // Habilita o deshabilita el campo de contraseña
+    });
+
+    // Manejo del formulario de edición de usuario
+    document.getElementById('submitEditUserBtn').addEventListener('click', function () {
+        const form = document.getElementById('edit-user-form');
+        const formData = new FormData(form);
+
+        // Validación de campos vacíos
+        const camposVacios = [];
+        formData.forEach((value, key) => {
+            if (!value.trim() && key !== 'user-password') { // No verificar la contraseña en los campos vacíos
+                camposVacios.push(key);
+            }
+        });
+
+        if (camposVacios.length > 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campos incompletos',
+                text: 'Por favor, complete todos los campos antes de continuar.',
+            });
+            return;
+        }
+
+        fetch('./actualizarUsuario.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: data.message,
+                        showConfirmButton: true,
+                    }).then(() => {
+                        window.location.href = 'user.html'; // Redirigir después de guardar
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: data.message,
+                        text: data.details || '',
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ocurrió un error al guardar los datos.',
+                });
+            });
+    });
+</script>

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../assets/img/favicon.png" type="image/x-icon">
+    <script src="../../assets/js/tailwindcss.js"></script>
+    <script src="../../assets/js/flowbite.min.js"></script>
+    <link rel="stylesheet" href="../../assets/css/material-icons.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <script src="../../assets/js/sweetalert2.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Jakarta+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+    <title>Papeleria Angel</title>
+</head>
+
+<body class="flex flex-col h-screen">
+    <!-- Capa de desenfoque -->
+    <div id="overlay"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 z-10 opacity-0 invisible transition-opacity duration-300 ease-in-out">
+    </div>
+
+    <nav class="fixed top-0 left-0 w-full z-40 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <div class="px-3 py-3 lg:px-5 lg:pl-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center justify-start">
+
+                    <a class="md:mr-24 items-center">
+                        <span
+                            class="self-center text-xl font-semibold sm:text-2xl text-blue-950 whitespace-nowrap dark:text-white">Papeleria
+                            Angel</span>
+                    </a>
+                    <!-- Botón para mostrar/ocultar el sidebar -->
+                    <button id="toggle-sidebar"
+                        class="ml-4 p-2 text-gray-900 rounded-md border-2 border-transparent transition-all duration-300 ease-in-out focus:border-slate-500 dark:text-white">
+                        <span id="icon"
+                            class="material-icons transition-transform duration-300 ease-in-out transform">menu_open</span>
+                    </button>
+
+                </div>
+                <div class="flex items-center">
+                    <!-- Menu -->
+                    <button type="button" data-dropdown-toggle="apps-dropdown"
+                        class="hidden p-2 text-gray-500 rounded-lg sm:flex hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700">
+
+                        <!-- Icon -->
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                            </path>
+                        </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div class="z-20 z-50 hidden max-w-sm my-4 overflow-hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow-lg dark:bg-gray-700 dark:divide-gray-600"
+                        id="apps-dropdown">
+                        <div
+                            class="block px-4 py-2 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            Menu
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 p-4 font-outfit">
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">shopping_cart</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Ventas</div>
+                            </a>
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">people</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Clientes</div>
+                            </a>
+
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">account_circle</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Perfil</div>
+                            </a>
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">settings</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Ajustes</div>
+                            </a>
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">inventory</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Productos</div>
+                            </a>
+
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">logout</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Salir</div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Perfil -->
+                    <div class="flex items-center ml-3">
+                        <div>
+                            <button type="button"
+                                class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                                id="user-menu-button-2" aria-expanded="false" data-dropdown-toggle="dropdown-2">
+                                <span class="sr-only">Open user menu</span>
+                                <img class="w-8 h-8 rounded-full"
+                                    src="https://ui-avatars.com/api/?name=Papeleria+Angelito" alt="Avatar">
+
+                            </button>
+                        </div>
+                        <!-- Dropdown menu -->
+                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+                            id="dropdown-2">
+                            <div class="px-4 py-3" role="none">
+                                <p class="text-sm text-gray-900 dark:text-white" role="none">
+                                    Papeleria Angelito
+                                </p>
+                                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                                    papeleria.angel@gmail.com
+                                </p>
+                            </div>
+                            <ul class="py-1" role="none">
+                                <li>
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                                        role="menuitem">Inicio</a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                                        role="menuitem">Ajustes</a>
+                                </li>
+                                <li>
+                                    <a id="logout"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                                        role="menuitem">Salir</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside id="sidebar"
+        class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-64 h-full pt-16 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform duration-300 ease-in-out transform -translate-x-full md:block"
+        aria-label="Sidebar">
+
+        <div
+            class="relative flex flex-col flex-1 min-h-0 pt-0 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
+                <div
+                    class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                    <ul class="pb-2 space-y-2">
+
+                        <!--Inicio-->
+                        <li>
+                            <a href="./../home.html"
+                                class="navigate-button flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500 font-outfit">home</span>
+                                <span class="ml-3">Inicio</span>
+                            </a>
+                        </li>
+
+                        <!--Ventas-->
+                        <li>
+                            <button type="button"
+                                class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                                aria-controls="dropdown-layouts" data-collapse-toggle="dropdown-layouts">
+                                <span class="material-icons text-slate-500">shopping_cart</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Ventas</span>
+                                <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <ul id="dropdown-layouts" class="py-2 space-y-2 hidden">
+                                <li>
+                                    <a href="../ventas/ventas.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Nueva
+                                        venta</a>
+                                </li>
+                                <li>
+                                    <a href="../ventas/verVemtas.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Ver
+                                        ventas</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Productos -->
+                        <li>
+                            <a href="../productos/productos.html"
+                                class="navigate-button flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500">inventory</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap">Productos</span>
+                            </a>
+                        </li>
+
+                        <!--Clientes-->
+                        <li>
+                            <a href="../clientes/clientes.html"
+                                class="navigate-button flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500">people</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap">Clientes</span>
+                            </a>
+                        </li>
+
+
+                        <!--Usuarios-->
+                        <li>
+                            <button type="button"
+                                class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                                aria-controls="dropdown-auth" data-collapse-toggle="dropdown-auth">
+                                <span class="material-icons text-slate-500">lock</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Acceso</span>
+                                <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <ul id="dropdown-auth" class="hidden py-2 space-y-2">
+                                <li>
+                                    <a href="../usuarios/user.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Perfil
+                                        de usuario</a>
+                                </li>
+                                <li>
+                                    <a href="../usuarios/verUsers.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Ver
+                                        usuarios</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!--Ajustes-->
+                        <li>
+                            <a href="#"
+                                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500">settings</span>
+                                <span class="ml-3" sidebar-toggle-item>Configuración</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- Spinner cierre de sesion -->
+    <div id="spinner-logout"
+        class="fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center">
+            <div role="status">
+                <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor" />
+                    <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill" />
+                </svg>
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spinner -->
+    <div id="spinner" class="fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-100 z-20 hidden">
+        <div class="flex items-center justify-center">
+            <div role="status">
+                <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor" />
+                    <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill" />
+                </svg>
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <main id="dynamicContent" class="flex-1 p-6 mt-16 transition-all duration-300 ml-60 md:ml-0 overflow-x-hidden">
+
+        <div id="modal"
+            class="fixed flex inset-0 z-50 hidden items-center justify-center bg-gray-800 bg-opacity-50 transition-opacity duration-500 ease-in-out opacity-0">
+            <div
+                class="bg-white rounded-2xl shadow-lg w-11/12 md:w-3/4 lg:w-1/2 relative scale-90 transition-transform duration-300 ease-in-out">
+                <button
+                    class="close-modal-button absolute top-2 right-2 p-2 text-gray-400 hover:text-red-600 hover:border-gray-300 hover:border-4 rounded-md border-transparent border transition-colors duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+
+                <div id="modal-body">
+                    <!-- Contenido del formulario -->
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="edit-modal"
+            class="fixed inset-0 z-50 hidden flex items-center justify-center bg-gray-800 bg-opacity-50 transition-opacity duration-500 ease-in-out opacity-0">
+            <div
+                class="bg-white rounded-2xl shadow-lg w-11/12 md:w-3/4 lg:w-1/2 relative scale-90 transition-transform duration-300 ease-in-out">
+                <!-- Botón para cerrar el modal -->
+                <button id="closeModalButtonEdit"
+                    class="absolute top-2 right-2 p-2 text-gray-400 hover:text-red-600 hover:border-gray-300 hover:border-4 rounded-md border-transparent border transition-colors duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+
+                <!-- Contenido del modal -->
+                <div id="edit-product-modal-body">
+                    <!-- Contenido del formulario o lo que necesites aquí -->
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-full mx-auto">
+
+            <!-- Ruta de navegación -->
+            <nav class="mb-4">
+                <ol class="list-reset flex text-gray-600 dark:text-gray-400 text-sm">
+                    <li>
+                        <a href="#" class="text-slate-600 hover:text-slate-700">Inicio</a>
+                    </li>
+                    <li>
+                        <span class="mx-2">/</span>
+                    </li>
+                    <li>
+                        <a href="#" class="text-slate-600 hover:text-slate-700">Productos</a>
+                    </li>
+                    <li>
+                        <span class="mx-2">/</span>
+                    </li>
+                    <li class="text-gray-500 dark:text-gray-300">Lista de productos</li>
+                </ol>
+            </nav>
+
+            <h1 class="text-xl font-bold mb-4">Productos</h1>
+            <!-- Contenedor flex para el buscador y el botón -->
+            <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-4 md:space-y-0 mb-4">
+                <!-- Campo de búsqueda -->
+                <input type="text" placeholder="Buscar productos..."
+                    class="border border-gray-300 rounded-lg w-full md:w-1/2 py-2 px-2 focus:outline-none focus:ring-2 focus:ring-slate-500 transition-all">
+
+                <!-- Botón alinear a la derecha -->
+                <button data-modal-file="./../productos/agregarProducto.html"
+                    class="open-modal bg-green-500 text-white px-4 py-2 rounded flex items-center justify-center space-x-2 w-full md:w-auto"
+                    type="button">
+                    <span class="material-icons">add_circle_outline</span>
+                    <span>Agregar</span>
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white">
+                    <thead>
+                        <tr>
+                            <th
+                                class="px-2 py-3 border-b-2 border-gray-300 text-left leading-4 text-gray-800 tracking-wider">
+                                Código</th>
+                            <th
+                                class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-gray-800 tracking-wider">
+                                Descripción</th>
+                            <th
+                                class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-gray-800 tracking-wider">
+                                Precio compra</th>
+                            <th
+                                class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-gray-800 tracking-wider">
+                                Precio venta</th>
+                            <th
+                                class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-gray-800 tracking-wider">
+                                Ganancia</th>
+                            <th
+                                class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-gray-800 tracking-wider">
+                                Stock</th>
+                            <th
+                                class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-gray-800 tracking-wider">
+                                Editar</th>
+                            <th
+                                class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-gray-800 tracking-wider">
+                                Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productos-tbody" class="bg-white">
+                        <!-- El contenido se carga aquí dinámicamente -->
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-white dark:text-white py-6 border-t border-gray-200 dark:bg-gray-800 dark:border-gray-800">
+        <div class="container mx-auto px-4 xl:max-w-6xl">
+            <div class="flex flex-wrap justify-between items-center text-sm">
+                <div class="w-full lg:w-1/2 text-center lg:text-left">
+                    <ul class="flex flex-wrap justify-center lg:justify-start space-x-3">
+                        <li>
+                            <a class="hover:text-indigo-500" href="#">Soporte</a>
+                        </li>
+                        <li>
+                            <a class="hover:text-indigo-500" href="#">Centro de ayuda</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="w-full lg:w-1/2 text-center lg:text-right mt-3 lg:mt-0">
+                    <p class="mb-0">
+                        <a href="#" class="hover:text-indigo-500">Papelería Angelito</a> | All rights reserved
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function cargarProductos() {
+                fetch('getProductos.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.getElementById('productos-tbody');
+                        tbody.innerHTML = '';
+
+                        data.forEach(producto => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200">${producto.codigo_producto}</td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">${producto.descripcion}</td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">${producto.precio_compra}</td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">${producto.precio_venta}</td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">${(producto.precio_venta - producto.precio_compra).toFixed(2)}</td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">${producto.stock}</td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <button data-codigo="${producto.codigo_producto}" class="edit-modal bg-blue-500 text-white px-3 py-1 rounded flex items-center space-x-1 transform transition-all duration-300 ease-in-out hover:bg-blue-600 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
+                                        <span class="material-icons transition-transform duration-300 transform hover:rotate-12">edit</span>
+                                    </button>
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <button data-codigo="${producto.codigo_producto}" class="delete-producto-button bg-red-500 text-white px-3 py-1 rounded flex items-center space-x-1 transform transition-all duration-300 ease-in-out hover:bg-red-600 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2">
+                                        <span class="material-icons transition-transform duration-300 transform hover:rotate-12">delete</span>
+                                    </button>
+                                </td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+
+                        // Manejo de los botones de eliminar
+                        document.querySelectorAll('.delete-producto-button').forEach(button => {
+                            button.addEventListener('click', function () {
+                                const codigoProducto = this.getAttribute('data-codigo');
+                                Swal.fire({
+                                    title: '¿Estás seguro?',
+                                    text: `¿Deseas eliminar el producto con código: ${codigoProducto}?`,
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Sí, eliminar',
+                                    cancelButtonText: 'Cancelar'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        fetch('deleteProducto.php', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/x-www-form-urlencoded'
+                                            },
+                                            body: new URLSearchParams({
+                                                'codigo_producto': codigoProducto
+                                            })
+                                        })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.status === 'success') {
+                                                    Swal.fire({
+                                                        title: 'Eliminado',
+                                                        text: data.message,
+                                                        icon: 'success'
+                                                    }).then(() => {
+                                                        cargarProductos();
+                                                    });
+                                                } else {
+                                                    Swal.fire({
+                                                        title: 'Error',
+                                                        text: data.message,
+                                                        icon: 'error'
+                                                    });
+                                                }
+                                            })
+                                            .catch(error => console.error('Error al eliminar el producto:', error));
+                                    } else {
+                                        Swal.fire({
+                                            title: 'Cancelado',
+                                            text: 'El producto está seguro :)',
+                                            icon: 'info'
+                                        });
+                                    }
+                                });
+                            });
+                        });
+
+                        // Manejo de los botones de editar
+                        document.querySelectorAll('.edit-modal').forEach(button => {
+                            button.addEventListener('click', function () {
+                                const codigoProducto = this.getAttribute('data-codigo');
+                                const modalFile = './../productos/modificarProducto.php?codigo=' + codigoProducto;
+                                const modalBody = document.getElementById('edit-product-modal-body');
+                                const modal = document.getElementById('edit-modal');
+
+                                // Limpiar el contenido del modal
+                                modalBody.innerHTML = '';
+
+                                fetch(modalFile)
+                                    .then(response => response.text())
+                                    .then(html => {
+                                        modalBody.innerHTML = html;
+                                        executeScripts(modalBody);
+
+                                        // Mostrar el modal con animación
+                                        modal.classList.remove('hidden');
+                                        modal.classList.add('opacity-0', 'scale-100');
+                                        setTimeout(() => {
+                                            modal.classList.remove('opacity-0', 'scale-90');
+                                            modal.classList.add('opacity-100', 'scale-100');
+                                        }, 10);
+                                    })
+                                    .catch(error => console.error('Error al cargar el contenido del modal:', error));
+                            });
+                        });
+
+                    })
+                    .catch(error => console.error('Error al cargar los productos:', error));
+            }
+
+            function executeScripts(modalBody) {
+                const inlineScripts = modalBody.querySelectorAll('script:not([src])');
+                inlineScripts.forEach(script => {
+                    const newScript = document.createElement('script');
+                    newScript.text = script.textContent || script.innerText;
+                    document.body.appendChild(newScript);
+                    document.body.removeChild(newScript);
+                });
+
+                const externalScripts = modalBody.querySelectorAll('script[src]');
+                externalScripts.forEach(script => {
+                    const newScript = document.createElement('script');
+                    newScript.src = script.src;
+                    newScript.onload = () => console.log(`Script cargado y ejecutado: ${script.src}`);
+                    newScript.onerror = () => console.error(`Error al cargar el script: ${script.src}`);
+                    document.body.appendChild(newScript);
+                });
+            }
+
+            function closeModal() {
+                const modal = document.getElementById('edit-modal');
+                if (!modal) return;
+
+                modal.classList.remove('opacity-100', 'scale-100');
+                modal.classList.add('opacity-0', 'scale-100');
+
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('opacity-0', 'scale-90');
+                }, 300);
+            }
+
+            const closeModalButton = document.getElementById('closeModalButtonEdit');
+            if (closeModalButton) {
+                closeModalButton.addEventListener('click', closeModal);
+            }
+
+            window.addEventListener('click', function (e) {
+                const modal = document.getElementById('edit-modal');
+                if (modal && e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            cargarProductos();
+        });
+    </script>
+
+    <!-- Close Modal-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const closeButtons = document.querySelectorAll('.close-modal-button');
+            const modal = document.getElementById('modal');
+            closeButtons.forEach(closeButton => {
+                closeButton.addEventListener('click', () => {
+
+                    modal.classList.remove('opacity-100', 'scale-100');
+                    modal.classList.add('opacity-0', 'scale-100');
+
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                        window.location.reload();
+                    }, 300);
+                });
+            });
+        });
+    </script>
+
+    <script src="../../assets/js/loadModal.js"></script>
+    <script src="../../assets/js/logout.js"></script>
+    <script src="../../assets/js/Authentication.js"></script>
+    <script src="../../assets/js/scripts.js"></script>
+</body>
+
+</html>

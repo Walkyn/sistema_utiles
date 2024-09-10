@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../assets/js/tailwindcss.js"></script>
+    <script src="../../assets/js/flowbite.min.js"></script>
+    <link rel="stylesheet" href="../../assets/css/material-icons.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <script src="../../assets/js/sweetalert2.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Jakarta+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+    <title>Papelería Ángel - Agregar Producto</title>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="w-full mx-auto p-8 bg-white rounded-2xl shadow-lg border-t-4 border-green-500">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Agregar Producto</h1>
+
+        <form id="formAgregarProducto" method="POST" action="">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Campo Código -->
+                <div class="flex flex-col">
+                    <label for="codigo" class="mb-2 text-lg font-medium text-gray-700">Código</label>
+                    <input type="text" id="codigo" name="codigo" placeholder="Ej. 12345"
+                        class="px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ease-in-out"
+                        required>
+                </div>
+
+                <!-- Campo Descripción -->
+                <div class="flex flex-col">
+                    <label for="descripcion" class="mb-2 text-lg font-medium text-gray-700">Descripción</label>
+                    <input type="text" id="descripcion" name="descripcion" placeholder="Ej. Cuaderno tamaño carta"
+                        class="px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ease-in-out"
+                        required>
+                </div>
+
+                <!-- Campo Precio de Compra -->
+                <div class="flex flex-col">
+                    <label for="precioCompra" class="mb-2 text-lg font-medium text-gray-700">Precio de compra</label>
+                    <input type="number" id="precioCompra" name="precioCompra" step="0.01" placeholder="Ej. 50.00"
+                        class="px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ease-in-out"
+                        required>
+                </div>
+
+                <!-- Campo Precio de Venta -->
+                <div class="flex flex-col">
+                    <label for="precioVenta" class="mb-2 text-lg font-medium text-gray-700">Precio de venta</label>
+                    <input type="number" id="precioVenta" name="precioVenta" step="0.01" placeholder="Ej. 70.00"
+                        class="px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ease-in-out"
+                        required>
+                </div>
+
+                <!-- Campo Stock -->
+                <div class="flex flex-col md:col-span-2">
+                    <label for="existencia" class="mb-2 text-lg font-medium text-gray-700">Stock</label>
+                    <input type="number" id="existencia" name="existencia" placeholder="Ej. 100"
+                        class="px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ease-in-out"
+                        required>
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="flex flex-col md:flex-row items-center justify-between mt-8 space-y-4 md:space-y-0 md:space-x-4">
+                <button type="button" id="submitBtn"
+                    class="flex items-center justify-center w-full md:w-1/2 py-3 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200 ease-in-out">
+                    <span class="material-icons mr-2">add_circle_outline</span>
+                    <span class="font-medium">Agregar</span>
+                </button>
+                <button type="reset"
+                    class="flex items-center justify-center w-full md:w-1/2 py-3 bg-gray-300 text-gray-800 rounded-lg shadow hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300 transition duration-200 ease-in-out">
+                    <span class="material-icons mr-2">refresh</span>
+                    <span class="font-medium">Restablecer</span>
+                </button>
+            </div>         
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function () {
+            const form = document.getElementById('formAgregarProducto');
+            const formData = new FormData(form);
+
+            // Validación de campos vacíos
+            const camposVacios = [];
+            formData.forEach((value, key) => {
+                if (!value.trim()) {
+                    camposVacios.push(key);
+                }
+            });
+
+            if (camposVacios.length > 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campos incompletos',
+                    text: 'Por favor, complete todos los campos antes de continuar.',
+                });
+                return;
+            }
+
+            fetch('./addProducto.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: data.message,
+                            showConfirmButton: true,
+                            timer: 2000
+                        });
+
+                        form.reset();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error al agregar el producto',
+                            text: data.message,
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error al procesar la solicitud',
+                        text: error.message,
+                    });
+                });
+                
+        });
+    </script>
+
+
+</body>
+
+</html>

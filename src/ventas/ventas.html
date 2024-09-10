@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../assets/img/favicon.png" type="image/x-icon">
+    <script src="../../assets/js/tailwindcss.js"></script>
+    <script src="../../assets/js/flowbite.min.js"></script>
+    <link rel="stylesheet" href="../../assets/css/material-icons.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Jakarta+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+    <title>Papeleria Angel</title>
+</head>
+
+<body class="flex flex-col h-screen">
+    <!-- Capa de desenfoque -->
+    <div id="overlay"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 z-10 opacity-0 invisible transition-opacity duration-300 ease-in-out">
+    </div>
+
+    <nav class="fixed top-0 left-0 w-full z-40 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <div class="px-3 py-3 lg:px-5 lg:pl-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center justify-start">
+
+                    <a class="md:mr-24 items-center">
+                        <span
+                            class="self-center text-xl font-semibold sm:text-2xl text-blue-950 whitespace-nowrap dark:text-white">Papeleria
+                            Angel</span>
+                    </a>
+                    <!-- Botón para mostrar/ocultar el sidebar -->
+                    <button id="toggle-sidebar"
+                        class="ml-4 p-2 text-gray-900 rounded-md border-2 border-transparent transition-all duration-300 ease-in-out focus:border-slate-500 dark:text-white">
+                        <span id="icon"
+                            class="material-icons transition-transform duration-300 ease-in-out transform">menu_open</span>
+                    </button>
+
+                </div>
+                <div class="flex items-center">
+                    <!-- Menu -->
+                    <button type="button" data-dropdown-toggle="apps-dropdown"
+                        class="hidden p-2 text-gray-500 rounded-lg sm:flex hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700">
+
+                        <!-- Icon -->
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                            </path>
+                        </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div class="z-20 z-50 hidden max-w-sm my-4 overflow-hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow-lg dark:bg-gray-700 dark:divide-gray-600"
+                        id="apps-dropdown">
+                        <div
+                            class="block px-4 py-2 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            Menu
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 p-4 font-outfit">
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">shopping_cart</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Ventas</div>
+                            </a>
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">people</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Clientes</div>
+                            </a>
+
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">account_circle</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Perfil</div>
+                            </a>
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">settings</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Ajustes</div>
+                            </a>
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">inventory</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Productos</div>
+                            </a>
+
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">logout</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Salir</div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Perfil -->
+                    <div class="flex items-center ml-3">
+                        <div>
+                            <button type="button"
+                                class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                                id="user-menu-button-2" aria-expanded="false" data-dropdown-toggle="dropdown-2">
+                                <span class="sr-only">Open user menu</span>
+                                <img class="w-8 h-8 rounded-full"
+                                    src="https://ui-avatars.com/api/?name=Papeleria+Angelito" alt="Avatar">
+
+                            </button>
+                        </div>
+                        <!-- Dropdown menu -->
+                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+                            id="dropdown-2">
+                            <div class="px-4 py-3" role="none">
+                                <p class="text-sm text-gray-900 dark:text-white" role="none">
+                                    Papeleria Angelito
+                                </p>
+                                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                                    papeleria.angel@gmail.com
+                                </p>
+                            </div>
+                            <ul class="py-1" role="none">
+                                <li>
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                                        role="menuitem">Inicio</a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                                        role="menuitem">Ajustes</a>
+                                </li>
+                                <li>
+                                    <a id="logout"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                                        role="menuitem">Salir</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside id="sidebar"
+        class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-64 h-full pt-16 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform duration-300 ease-in-out transform -translate-x-full md:block"
+        aria-label="Sidebar">
+
+        <div
+            class="relative flex flex-col flex-1 min-h-0 pt-0 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
+                <div
+                    class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                    <ul class="pb-2 space-y-2">
+
+                        <!--Inicio-->
+                        <li>
+                            <a href="./../home.html"
+                                class="navigate-button flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500 font-outfit">home</span>
+                                <span class="ml-3">Inicio</span>
+                            </a>
+                        </li>
+
+                        <!--Ventas-->
+                        <li>
+                            <button type="button"
+                                class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                                aria-controls="dropdown-layouts" data-collapse-toggle="dropdown-layouts">
+                                <span class="material-icons text-slate-500">shopping_cart</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Ventas</span>
+                                <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <ul id="dropdown-layouts" class="py-2 space-y-2">
+                                <li>
+                                    <a href="../ventas/ventas.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Nueva
+                                        venta</a>
+                                </li>
+                                <li>
+                                    <a href="./verVemtas.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Ver
+                                        ventas</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Productos -->
+                        <li>
+                            <a href="../productos/productos.html"
+                                class="navigate-button flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500">inventory</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap">Productos</span>
+                            </a>
+                        </li>
+
+                        <!--Clientes-->
+                        <li>
+                            <a href="../clientes/clientes.html"
+                                class="navigate-button flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500">people</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap">Clientes</span>
+                            </a>
+                        </li>
+
+                        <!--Usuarios-->
+                        <li>
+                            <button type="button"
+                                class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                                aria-controls="dropdown-auth" data-collapse-toggle="dropdown-auth">
+                                <span class="material-icons text-slate-500">lock</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Acceso</span>
+                                <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <ul id="dropdown-auth" class="hidden py-2 space-y-2">
+                                <li>
+                                    <a href="../usuarios/user.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Perfil
+                                        de usuario</a>
+                                </li>
+                                <li>
+                                    <a href="../usuarios/verUsers.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Ver
+                                        usuarios</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!--Ajustes-->
+                        <li>
+                            <a href="#"
+                                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500">settings</span>
+                                <span class="ml-3" sidebar-toggle-item>Configuración</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- Spinner cierre de sesion -->
+    <div id="spinner-logout"
+        class="fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center">
+            <div role="status">
+                <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor" />
+                    <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill" />
+                </svg>
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spinner -->
+    <div id="spinner" class="fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-100 z-20 hidden">
+        <div class="flex items-center justify-center">
+            <div role="status">
+                <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor" />
+                    <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill" />
+                </svg>
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <main id="dynamicContent" class="flex-1 p-6 mt-16 transition-all duration-300 ml-60 md:ml-0 bg-zinc-50">
+
+        <div class="max-w-full mx-auto">
+            <!-- Ruta de navegación -->
+            <nav class="mb-4">
+                <ol class="list-reset flex text-gray-600 dark:text-gray-400 text-sm">
+                    <li>
+                        <a href="#" class="text-slate-600 hover:text-slate-700">Inicio</a>
+                    </li>
+                    <li>
+                        <span class="mx-2">/</span>
+                    </li>
+                    <li>
+                        <a href="#" class="text-slate-600 hover:text-slate-700">Venta</a>
+                    </li>
+                    <li>
+                        <span class="mx-2">/</span>
+                    </li>
+                    <li class="text-gray-500 dark:text-gray-300">Realizar venta</li>
+                </ol>
+            </nav>
+
+            <div class="flex flex-col md:flex-row md:gap-6">
+                <!-- Barra de búsqueda de productos -->
+                <div class="relative flex flex-col md:flex-row items-center flex-1 gap-4 md:gap-4">
+                    <div class="relative w-full">
+                        <input type="text" placeholder="Buscar productos..."
+                            class="w-full py-2 pl-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 text-sm">
+                        <span
+                            class="material-icons absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600">search</span>
+                    </div>
+
+                    <!-- Botón "Agregar" -->
+                    <button
+                        class="w-full md:w-auto bg-slate-500 text-white py-2 px-12 rounded-lg hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-500 flex items-center justify-center text-sm transition-all">
+                        <span class="material-icons">add</span>
+                        <span class="ml-2">Agregar</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-6 md:flex-row md:gap-6 mt-2">
+                <!-- Card de venta -->
+                <div class="flex-1 bg-white shadow-lg rounded-lg p-6">
+                    <h2 class="text-xl font-semibold mb-4">BOLETA</h2>
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-2">
+                        <p class="text-gray-600"><span id="invoiceNumber" class="font-bold">Cargando...</span></p>
+
+                        <div class="relative w-full md:w-auto">
+                            <button id="dropdownSearchButton" data-dropdown-toggle="dropdownSearch"
+                                class="inline-flex items-center w-full p-2 px-8 text-sm font-outfit text-white bg-slate-600 transition-all rounded hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800"
+                                type="button">
+                                <span class="flex-1 text-left">Seleccionar cliente</span>
+                                <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m1 1 4 4 4-4" />
+                                </svg>
+                            </button>
+
+                            <!-- Dropdown menu -->
+                            <div id="dropdownSearch"
+                                class="z-10 hidden bg-zinc-50 rounded-lg shadow-md border w-50 dark:bg-gray-700">
+                                <div class="p-3">
+                                    <label for="input-group-search" class="sr-only">Search</label>
+                                    <div class="relative">
+                                        <div
+                                            class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"
+                                                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                            </svg>
+                                        </div>
+                                        <input type="text" id="input-group-search"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder="Buscar cliente">
+                                    </div>
+                                </div>
+                                <ul id="clientList"
+                                    class="h-40 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="dropdownSearchButton">
+                                    <!-- Los clientes se cargarán aquí -->
+                                </ul>
+                                <div
+                                    class="p-3 border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-700 rounded-b-lg">
+                                    <a id="deleteClientLink"
+                                        class="flex items-center p-2 text-sm font-medium text-red-600 border-t border-gray-200 rounded-b-lg bg-gray-50 dark:border-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-red-500 hover:underline cursor-pointer">
+                                        <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                            fill="currentColor" viewBox="0 0 20 18">
+                                            <path
+                                                d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Zm11-3h-6a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2Z" />
+                                        </svg>
+                                        Borrar cliente
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <span>Cliente: </span>
+                        <span id="clientName">Público general</span>
+                    </div>
+                    <span id="idCliente" class="hidden"></span>
+
+                    <div class="max-h-48 min-h-48 overflow-y-auto">
+                        <table id="ventasTable" class="min-w-full mt-2 table-auto">
+                            <thead>
+                                <tr>
+                                    <th class="py-2 text-left">Acción</th>
+                                    <th class="py-2 text-left">Producto</th>
+                                    <th class="py-2 text-center">Cantidad</th>
+                                    <th class="py-2 text-right">Precio</th>
+                                    <th class="py-2 text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Los productos de la venta se cargarán aquí -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="flex justify-between">
+                            <span class="font-bold">SubTotal</span>
+                            <span id="subTotal">0$</span>
+                        </div>
+                        <div class="flex justify-between mt-2">
+                            <label for="descuento" class="font-bold">Descuento ($)</label>
+                            <input type="number" id="descuento" value="0" min="0"
+                                class="w-20 p-1 border border-gray-300 rounded-lg text-right">
+                        </div>
+                        <div class="border-t mt-4 pt-2 flex justify-between">
+                            <span class="font-bold">Total</span>
+                            <span id="total">0$</span>
+                        </div>
+                        <div class="flex flex-col md:flex-row justify-end mt-4">
+                            <button type="submit" id="submitBtn"
+                                class="w-full md:w-auto bg-slate-500 text-white px-8 py-2 rounded-lg hover:bg-slate-600 focus:outline-none transition-all focus:ring-2 focus:ring-slate-500">
+                                <span class="material-icons mr-2">shopping_cart</span>
+                                Cobrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Tabla de productos -->
+                <div class="flex-1 bg-white shadow-lg rounded-lg p-6 overflow-x-auto">
+                    <div class="mb-4">
+                        <h2 class="text-xl font-semibold">Productos</h2>
+                        <div class="relative mt-2">
+                            <input type="text" placeholder="Buscar productos..."
+                                class="w-full py-2 pl-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 text-sm">
+                            <span
+                                class="material-icons absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600">search</span>
+                        </div>
+                    </div>
+
+                    <div class="max-h-[21rem] min-h-[21rem] overflow-y-auto">
+                        <table id="productsTable" class="min-w-full mb-4 table-auto">
+                            <thead>
+                                <tr>
+                                    <th class="py-2 text-left">Acción</th>
+                                    <th class="py-2 text-left">Producto</th>
+                                    <th class="py-2 text-right">Precio</th>
+                                    <th class="py-2 text-right">Stock</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Los productos se cargarán aquí -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button type="button" id="addProductBtn"
+                        class="w-full md:w-auto bg-slate-500 text-white mt-6 px-4 py-2 rounded-lg hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500 transition-all">
+                        <span class="material-icons mr-2">add_circle_outline</span>
+                        Agregar producto
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-white dark:text-white py-6 border-t border-gray-200 dark:bg-gray-800 dark:border-gray-800">
+        <div class="container mx-auto px-4 xl:max-w-6xl">
+            <div class="flex flex-wrap justify-between items-center text-sm">
+                <div class="w-full lg:w-1/2 text-center lg:text-left">
+                    <ul class="flex flex-wrap justify-center lg:justify-start space-x-3">
+                        <li>
+                            <a class="hover:text-indigo-500" href="#">Soporte</a>
+                        </li>
+                        <li>
+                            <a class="hover:text-indigo-500" href="#">Centro de ayuda</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="w-full lg:w-1/2 text-center lg:text-right mt-3 lg:mt-0">
+                    <p class="mb-0">
+                        <a href="../landing.html" class="hover:text-indigo-500">Papelería A.</a> | All rights reserved
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--script 1 -->
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const now = new Date();
+
+            // Obtener componentes de la fecha y hora local
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const localDate = `${year}-${month}-${day}`;
+            const localTime = `${hours}:${minutes}:${seconds}`;
+
+            console.log('Fecha de venta:', localDate);
+            console.log('Hora de venta:', localTime);
+
+            // Obtener datos del formulario
+            const clientId = document.getElementById('idCliente').textContent.trim();
+            const subTotal = parseFloat(document.getElementById('subTotal').textContent.replace('$', ''));
+            const descuento = parseFloat(document.getElementById('descuento').value) || 0;
+            const total = parseFloat(document.getElementById('total').textContent.replace('$', ''));
+
+            // Obtener productos de la tabla
+            const productsTable = document.getElementById('ventasTable').getElementsByTagName('tbody')[0];
+            const rows = productsTable.getElementsByTagName('tr');
+            const products = [];
+            let totalArticulos = 0;
+
+            console.log('Códigos de productos en la tabla de ventas:');
+
+            for (let i = 0; i < rows.length; i++) {
+                const codigo = rows[i].getAttribute('data-codigo-producto');
+                const cantidad = parseInt(rows[i].getElementsByClassName('cantidad')[0].textContent.trim());
+                const precio = parseFloat(rows[i].getElementsByClassName('total')[0].textContent.replace('$', '').trim());
+
+                const product = {
+                    codigo,
+                    descripcion: rows[i].getElementsByTagName('td')[1].textContent.trim(),
+                    cantidad,
+                    precio
+                };
+                products.push(product);
+                totalArticulos += cantidad;
+            }
+
+            // Verificar si hay productos en la tabla
+            if (products.length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Advertencia',
+                    text: 'No hay productos en el Ticket.'
+                });
+                return;
+            }
+
+            // Preparar el cliente para la venta
+            const saleClientId = clientId || null;
+
+            // Enviar datos al servidor mediante fetch para guardar la venta
+            fetch('guardar_venta.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    clientId: saleClientId,
+                    subTotal,
+                    descuento,
+                    total,
+                    articulos: totalArticulos,
+                    products,
+                    fechaVenta: localDate,
+                    horaVenta: localTime
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Actualizar stock
+                        fetch('update_stock.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                ventaId: data.ventaId,
+                                products
+                            })
+                        })
+                            .then(response => response.json())
+                            .then(stockUpdateData => {
+                                if (stockUpdateData.success) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Éxito',
+                                        text: 'Venta registrada exitosamente'
+                                    }).then(() => {
+                                        window.location.href = 'ventas.html';
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'Error al actualizar el stock: ' + stockUpdateData.message
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error al actualizar el stock:', error);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'Error al actualizar el stock'
+                                });
+                            });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Error al guardar la venta: ' + data.message
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al realizar la solicitud'
+                    });
+                });
+        });
+
+    </script>
+
+    <!--script asignar clientes 2-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdownButton = document.getElementById('dropdownSearchButton');
+            const dropdownMenu = document.getElementById('dropdownSearch');
+            const addClientLink = document.getElementById('addClientLink');
+            const deleteClientLink = document.getElementById('deleteClientLink');
+            const clientSpan = document.getElementById('clientName');
+            const idClientSpan = document.getElementById('idCliente');
+            const inputGroupSearch = document.querySelector('#input-group-search');
+
+            let selectedClientId = null;
+            let selectedClientCheckbox = null;
+
+            dropdownButton.addEventListener('click', function () {
+                dropdownMenu.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!dropdownMenu.contains(event.target) && !dropdownButton.contains(event.target)) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+
+            // Handle client selection
+            document.addEventListener('change', function (event) {
+                if (event.target.name === 'client') {
+                    const clientName = event.target.nextElementSibling.textContent;
+                    selectedClientId = event.target.value;
+                    clientSpan.textContent = clientName;
+                    idClientSpan.textContent = selectedClientId;
+                    selectedClientCheckbox = event.target;
+                }
+            });
+
+            // Handle delete client button
+            deleteClientLink.addEventListener('click', function (event) {
+                event.preventDefault();
+                if (selectedClientId) {
+                    clientSpan.textContent = 'Público general';
+                    idClientSpan.textContent = '';
+                    if (selectedClientCheckbox) {
+                        selectedClientCheckbox.checked = false;
+                    }
+                    selectedClientId = null;
+                    selectedClientCheckbox = null;
+                } else {
+                    alert('No hay cliente seleccionado para eliminar');
+                }
+            });
+
+            // Load clients into the dropdown
+            fetch('get_clients.php')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Clientes cargados:', data);
+                    const clientList = document.querySelector('#clientList');
+
+                    clientList.innerHTML = '';
+                    data.forEach(client => {
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('flex', 'items-center', 'p-2', 'rounded', 'hover:bg-gray-100', 'dark:hover:bg-gray-600');
+                        listItem.innerHTML = `
+                        <input type="radio" name="client" value="${client.id_cliente}" id="client-${client.id_cliente}"
+                            class="form-radio h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="client-${client.id_cliente}" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">${client.nombre_apellido}</label>
+                    `;
+                        clientList.appendChild(listItem);
+                    });
+
+                    // Search filter
+                    inputGroupSearch.addEventListener('input', function () {
+                        const query = inputGroupSearch.value.toLowerCase();
+                        clientList.querySelectorAll('li').forEach(item => {
+                            const label = item.querySelector('label').textContent.toLowerCase();
+                            item.style.display = label.includes(query) ? '' : 'none';
+                        });
+                    });
+                })
+                .catch(error => console.error('Error al cargar clientes:', error));
+        });
+
+    </script>
+
+    <!--script agregar productos tabla venta 3-->
+    <script>
+        let totalVenta = 0;
+        let productsData = {};
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Cargar productos
+            fetch('get_products.php')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#productsTable tbody');
+                    tableBody.innerHTML = '';
+
+                    data.forEach(product => {
+                        productsData[product.codigo_producto] = {
+                            descripcion: product.descripcion,
+                            precio_venta: product.precio_venta,
+                            stock: product.stock
+                        };
+
+                        const row = document.createElement('tr');
+                        row.classList.add('border-b');
+
+                        row.innerHTML = `
+                            <td class="py-2">
+                                <input type="checkbox"
+                                    class="form-checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    data-codigo-producto="${product.codigo_producto}"
+                                    data-precio-venta="${product.precio_venta}"
+                                    data-stock="${product.stock}">
+                            </td>
+                            <td class="py-2">${product.descripcion}</td>
+                            <td class="py-2 text-right">$${product.precio_venta}</td>
+                            <td class="py-2 text-right stock">${product.stock}</td>
+                        `;
+
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al cargar los productos:', error);
+                });
+
+            // Agregar productos seleccionados a la tabla de ventas
+            document.querySelector('#addProductBtn').addEventListener('click', function () {
+                const selectedProducts = document.querySelectorAll('#productsTable tbody input[type="checkbox"]:checked');
+                const ventasTableBody = document.querySelector('#ventasTable tbody');
+
+                if (selectedProducts.length === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Ningún producto seleccionado',
+                        text: 'Por favor, seleccione un producto.',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                let subTotal = 0;
+
+                selectedProducts.forEach(productCheckbox => {
+                    const codigoProducto = productCheckbox.getAttribute('data-codigo-producto');
+                    const precioVenta = parseFloat(productCheckbox.getAttribute('data-precio-venta'));
+                    const stockDisponible = productsData[codigoProducto].stock;
+
+                    if (stockDisponible <= 0) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Producto agotado',
+                            text: `El producto ${productsData[codigoProducto].descripcion} está agotado.`,
+                            confirmButtonText: 'OK'
+                        });
+                        productCheckbox.checked = false;
+                        return;
+                    }
+
+                    let existingRow = ventasTableBody.querySelector(`tr[data-codigo-producto="${codigoProducto}"]`);
+
+                    if (existingRow) {
+                        let cantidadCell = existingRow.querySelector('.cantidad');
+                        let totalCell = existingRow.querySelector('.total');
+
+                        let nuevaCantidad = parseInt(cantidadCell.textContent) + 1;
+                        let nuevoTotal = nuevaCantidad * precioVenta;
+
+                        // Actualizar cantidad y total en la tabla de ventas
+                        cantidadCell.textContent = nuevaCantidad;
+                        totalCell.textContent = `$${nuevoTotal.toFixed(2)}`;
+                    } else {
+                        const newRow = document.createElement('tr');
+                        newRow.setAttribute('data-codigo-producto', codigoProducto);
+                        newRow.classList.add('border-b');
+
+                        newRow.innerHTML = `
+                            <td class="py-2 text-left whitespace-nowrap">
+                                <button 
+                                    class="bg-red-500 text-white px-1 py-1 rounded hover:bg-red-600 focus:outline-none transition-transform"
+                                    data-codigo-producto="${codigoProducto}">
+                                    <span class="material-icons transition-transform duration-300 transform hover:rotate-12">delete</span>
+                                </button>
+                            </td>
+                            <td class="py-2 descripcion break-words">${productsData[codigoProducto].descripcion}</td>
+                            <td class="py-2 text-center whitespace-nowrap">
+                                <button class="decrementar-cantidad bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 focus:outline-none">-</button>
+                                <span class="cantidad">1</span>
+                                <button class="incrementar-cantidad bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 focus:outline-none">+</button>
+                            </td>
+                            <td class="py-2 text-right max-w-xs truncate">$${precioVenta.toFixed(2)}</td>
+                            <td class="py-2 text-right total max-w-xs truncate">$${precioVenta.toFixed(2)}</td>
+                        `;
+
+                        ventasTableBody.appendChild(newRow);
+
+                    }
+
+                    // Actualizar el stock en el objeto de datos
+                    productsData[codigoProducto].stock -= 1;
+
+                    // Actualizar el stock visible en la tabla de productos
+                    const productRow = document.querySelector(`#productsTable tbody input[data-codigo-producto="${codigoProducto}"]`).closest('tr');
+                    productRow.querySelector('.stock').textContent = productsData[codigoProducto].stock;
+
+                    // Desactivar checkbox si el stock llega a 0
+                    if (productsData[codigoProducto].stock <= 0) {
+                        productCheckbox.disabled = true;
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Stock agotado',
+                            text: `El stock del producto ${productsData[codigoProducto].descripcion} se ha agotado.`,
+                            confirmButtonText: 'OK'
+                        });
+                    }
+
+                    subTotal += precioVenta;
+                });
+
+                totalVenta += subTotal;
+                document.querySelector('#subTotal').textContent = `$${totalVenta.toFixed(2)}`;
+                actualizarTotal();
+            });
+
+            // Actualizar total cuando se aplica descuento
+            document.querySelector('#descuento').addEventListener('input', actualizarTotal);
+
+            function actualizarTotal() {
+                const descuento = parseFloat(document.querySelector('#descuento').value) || 0;
+                const totalConDescuento = totalVenta - descuento;
+                document.querySelector('#total').textContent = `$${totalConDescuento.toFixed(2)}`;
+            }
+
+            // Manejar incremento y decremento de la cantidad en la tabla de ventas
+            document.querySelector('#ventasTable tbody').addEventListener('click', function (event) {
+                const button = event.target.closest('button');
+                if (button) {
+                    const row = button.closest('tr');
+                    const codigoProducto = row.getAttribute('data-codigo-producto');
+                    const precioProducto = parseFloat(row.querySelector('.total').textContent.replace('$', ''));
+                    const cantidadCell = row.querySelector('.cantidad');
+                    let cantidad = parseInt(cantidadCell.textContent);
+
+                    if (button.classList.contains('incrementar-cantidad')) {
+                        if (productsData[codigoProducto].stock <= 0) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Stock insuficiente',
+                                text: `Stock agotado para el producto ${productsData[codigoProducto].descripcion}.`,
+                                confirmButtonText: 'OK'
+                            });
+                            return;
+                        }
+
+                        cantidad += 1;
+                        productsData[codigoProducto].stock -= 1;
+                    } else if (button.classList.contains('decrementar-cantidad')) {
+                        if (cantidad > 1) {
+                            cantidad = Math.max(cantidad - 1, 1);
+                            productsData[codigoProducto].stock += 1;
+                        }
+                    }
+
+                    let nuevoTotal = cantidad * productsData[codigoProducto].precio_venta;
+                    cantidadCell.textContent = cantidad;
+                    row.querySelector('.total').textContent = `$${nuevoTotal.toFixed(2)}`;
+
+                    // Actualizar el stock visible en la tabla de productos
+                    const productRow = document.querySelector(`#productsTable tbody input[data-codigo-producto="${codigoProducto}"]`).closest('tr');
+                    productRow.querySelector('.stock').textContent = productsData[codigoProducto].stock;
+
+                    // Desactivar o reactivar el checkbox
+                    const productCheckbox = document.querySelector(`#productsTable tbody input[data-codigo-producto="${codigoProducto}"]`);
+                    productCheckbox.disabled = productsData[codigoProducto].stock <= 0;
+
+                    // Recalcular el total
+                    totalVenta += (nuevoTotal - precioProducto);
+                    document.querySelector('#subTotal').textContent = `$${totalVenta.toFixed(2)}`;
+                    actualizarTotal();
+                }
+            });
+
+
+            // Quitar productos de la tabla de ventas
+            document.querySelector('#ventasTable tbody').addEventListener('click', function (event) {
+                const button = event.target.closest('button');
+                if (button && button.classList.contains('bg-red-500')) {
+                    const row = button.closest('tr');
+                    const codigoProducto = button.getAttribute('data-codigo-producto');
+                    const precioProducto = parseFloat(row.querySelector('.total').textContent.replace('$', ''));
+                    const cantidadProducto = parseInt(row.querySelector('.cantidad').textContent);
+
+                    totalVenta -= precioProducto;
+                    row.remove();
+
+                    // Actualizar el stock en el objeto de datos
+                    productsData[codigoProducto].stock += cantidadProducto;
+
+                    // Actualizar el stock visible en la tabla de productos
+                    const productCheckbox = document.querySelector(`#productsTable tbody input[data-codigo-producto="${codigoProducto}"]`);
+                    const productRow = productCheckbox.closest('tr');
+                    productRow.querySelector('.stock').textContent = productsData[codigoProducto].stock;
+
+                    // Reactivar checkbox si el stock vuelve a estar disponible
+                    if (productsData[codigoProducto].stock > 0) {
+                        productCheckbox.disabled = false;
+                    }
+
+                    document.querySelector('#subTotal').textContent = `$${totalVenta.toFixed(2)}`;
+                    actualizarTotal();
+                }
+            });
+        });
+    </script>
+
+    <!--script 4-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('id_boleta.php')
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data && data.invoice_number) {
+                        document.getElementById('invoiceNumber').textContent = data.invoice_number;
+                    } else {
+                        console.error('Error al obtener el número de boleta.');
+                        document.getElementById('invoiceNumber').textContent = 'Error al obtener el número de boleta.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud:', error);
+                    document.getElementById('invoiceNumber').textContent = 'Error en la solicitud.';
+                });
+        });
+    </script>
+
+    <script src="../../assets/js/logout.js"></script>
+    <script src="../../assets/js/Authentication.js"></script>
+    <script src="../../assets/js/sweetalert2.js"></script>
+    <script src="../../assets/js/scripts.js"></script>
+    <script src="../../assets/js/loadModal.js"></script>
+</body>
+
+</html>

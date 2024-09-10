@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../assets/js/tailwindcss.js"></script>
+    <script src="../../assets/js/flowbite.min.js"></script>
+    <link rel="stylesheet" href="../../assets/css/material-icons.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <script src="../../assets/js/sweetalert2.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Jakarta+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+    <title>Papelería Angel - Registrar Usuario</title>
+</head>
+
+<body class="flex flex-col h-screen">
+
+    <main id="dynamicContent" class="flex-1 transition-all duration-300 ml-60 md:ml-0">
+
+        <!-- Información General -->
+        <div class="w-full bg-white p-6 rounded-2xl shadow-md">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl">Registrar nuevo usuario</h2>
+            </div>
+
+            <form id="userForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Identificación</label>
+                        <input type="number" id="user-id" name="id_usuario"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="10056009"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nombres</label>
+                        <input type="text" id="first-name" name="first-name"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="Bonnie"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Apellidos</label>
+                        <input type="text" id="last-name" name="last-name"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="Green"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">País</label>
+                        <input type="text" id="country" name="country"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="México"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Ciudad</label>
+                        <input type="text" id="city" name="city"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="San Francisco"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                        <input type="tel" id="phone" name="phone"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="+1 (234) 567 89" required>
+                    </div>
+                </div>
+
+                <!-- Sección para Correo y Contraseña -->
+                <div class="flex flex-col md:flex-row gap-4 mt-4">
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700">Correo</label>
+                        <input type="email" id="email" name="email"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                            placeholder="example@gmail.com" required>
+                        <p id="emailError" class="text-red-500 text-sm opacity-0 transition-opacity duration-500 mt-2">
+                            Por favor, ingrese un email válido.</p>
+                    </div>
+                    <div class="flex-1 relative">
+                        <label class="block text-sm font-medium text-gray-700">Contraseña</label>
+                        <div class="relative">
+                            <input id="passwordInput" type="password" name="password"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2 pr-10"
+                                placeholder="********" required>
+                            <button id="togglePassword" type="button"
+                                class="absolute inset-y-0 right-0 flex items-center h-full px-2 text-gray-500">
+                                <i id="passwordIcon" class="material-icons">visibility</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección para asignar roles -->
+                <div class="mt-2">
+                    <h3 class="text-lg font-medium text-gray-700 mb-4">Asignar Rol</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-center">
+                            <input type="radio" id="rol-admin" name="role" value="1" class="hidden" required>
+                            <div class="toggle-switch w-12 h-6 bg-gray-400 rounded-full cursor-pointer relative"
+                                onclick="toggleSwitch('rol-admin')">
+                                <div
+                                    class="toggle-thumb w-6 h-6 bg-white rounded-full shadow-md transform transition-transform">
+                                </div>
+                            </div>
+                            <label for="rol-admin" class="ml-3 text-gray-700">Administrador</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="rol-empleado" name="role" value="2" class="hidden" required>
+                            <div class="toggle-switch w-12 h-6 bg-gray-400 rounded-full cursor-pointer relative"
+                                onclick="toggleSwitch('rol-empleado')">
+                                <div
+                                    class="toggle-thumb w-6 h-6 bg-white rounded-full shadow-md transform transition-transform">
+                                </div>
+                            </div>
+                            <label for="rol-empleado" class="ml-3 text-gray-700">Empleado</label>
+                        </div>
+                    </div>
+                    <p id="roleError" class="text-red-500 text-sm opacity-0 transition-opacity duration-500 mt-2">
+                        Por favor, seleccione un rol.</p>
+                </div>
+
+                <!-- Botón de registro -->
+                <div class="flex justify-center mt-2">
+                    <button type="button" id="submitUserBtn"
+                        class="bg-slate-500 text-white px-8 py-2 rounded-md">Guardar</button>
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+    <script src="./../../assets/js/loadModal.js"></script>
+
+    <script>
+        
+        document.getElementById('togglePassword')?.addEventListener('click', () => {
+            const passwordInput = document.getElementById('passwordInput');
+            const passwordIcon = document.getElementById('passwordIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.textContent = 'visibility';
+            }
+        });
+
+        function toggleSwitch(id) {
+            const radio = document.getElementById(id);
+            document.querySelectorAll(`input[name="${radio.name}"]`).forEach(r => {
+                r.checked = false;
+                const switchElem = r.nextElementSibling;
+                switchElem.classList.remove('bg-green-500');
+                switchElem.classList.add('bg-gray-400');
+                switchElem.querySelector('.toggle-thumb').style.transform = 'translateX(0)';
+            });
+            radio.checked = true;
+
+            const switchElem = radio.nextElementSibling;
+            switchElem.classList.add('bg-green-500');
+            switchElem.classList.remove('bg-gray-400');
+            switchElem.querySelector('.toggle-thumb').style.transform = 'translateX(1.5rem)';
+        }
+
+        document.getElementById('submitUserBtn').addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const form = document.getElementById('userForm');
+            const formData = new FormData(form);
+
+            // Validar campos vacíos
+            const camposVacios = [];
+            formData.forEach((value, key) => {
+                if (!value.trim() && key !== 'role') {
+                    camposVacios.push(key);
+                }
+            });
+
+            if (camposVacios.length > 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campos incompletos',
+                    text: 'Por favor, complete todos los campos antes de continuar.',
+                });
+                return;
+            }
+
+            // Validar rol seleccionado
+            const role = formData.get('role');
+            if (!role) {
+                document.getElementById('roleError').classList.remove('opacity-0');
+                return;
+            } else {
+                document.getElementById('roleError').classList.add('opacity-0');
+            }
+
+            // Validar correo electrónico
+            const emailInput = document.getElementById('email');
+            if (!emailInput.validity.valid) {
+                document.getElementById('emailError').classList.remove('opacity-0');
+                return;
+            }
+
+            // Convertir FormData a JSON
+            const jsonObject = {};
+            formData.forEach((value, key) => {
+                jsonObject[key] = value;
+            });
+
+            // Verificar el objeto JSON antes de enviarlo
+            console.log(jsonObject);
+
+            fetch('addUser.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(jsonObject)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Éxito',
+                            text: 'Usuario registrado exitosamente.',
+                        }).then(() => {
+                            form.reset();
+                            document.querySelectorAll('input[name="role"]').forEach(radio => {
+                                radio.checked = false;
+                                const switchElem = radio.nextElementSibling;
+                                switchElem.classList.remove('bg-green-500');
+                                switchElem.classList.add('bg-gray-400');
+                                switchElem.querySelector('.toggle-thumb').style.transform = 'translateX(0)';
+                            });
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.message,
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hubo un problema al registrar el usuario.',
+                    });
+                });
+        });
+    </script>
+
+
+</body>
+
+</html>

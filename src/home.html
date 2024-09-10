@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../assets/img/favicon.png" type="image/x-icon">
+    <script src="./../assets/js/tailwindcss.js"></script>
+    <script src="./../assets/js/flowbite.min.js"></script>
+    <link rel="stylesheet" href="./../assets/css/material-icons.css">
+    <link rel="stylesheet" href="./../assets/css/styles.css">
+    <script src="./../assets/js/apexcharts.js"></script>
+    <script src="./../assets/js/sweetalert2.js"></script>
+    <script src="../assets/js/resumenFinanciero.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.41.0/dist/apexcharts.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Jakarta+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+    <title>Papeleria Angel</title>
+</head>
+
+<body class="flex flex-col h-screen">
+    <!-- Capa de desenfoque -->
+    <div id="overlay"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 z-10 opacity-0 invisible transition-opacity duration-300 ease-in-out">
+    </div>
+
+    <nav class="fixed top-0 left-0 w-full z-40 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <div class="px-3 py-3 lg:px-5 lg:pl-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center justify-start">
+
+                    <a class="md:mr-24 items-center">
+                        <span
+                            class="self-center text-xl font-semibold sm:text-2xl text-blue-950 whitespace-nowrap dark:text-white">Papeleria
+                            Angel</span>
+                    </a>
+                    <!-- Botón para mostrar/ocultar el sidebar -->
+                    <button id="toggle-sidebar"
+                        class="ml-4 p-2 text-gray-900 rounded-md border-2 border-transparent transition-all duration-300 ease-in-out focus:border-slate-500 dark:text-white">
+                        <span id="icon"
+                            class="material-icons transition-transform duration-300 ease-in-out transform">menu_open</span>
+                    </button>
+
+                </div>
+                <div class="flex items-center">
+                    <!-- Menu -->
+                    <button type="button" data-dropdown-toggle="apps-dropdown"
+                        class="hidden p-2 text-gray-500 rounded-lg sm:flex hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700">
+
+                        <!-- Icon -->
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                            </path>
+                        </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div class="z-20 z-50 hidden max-w-sm my-4 overflow-hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow-lg dark:bg-gray-700 dark:divide-gray-600"
+                        id="apps-dropdown">
+                        <div
+                            class="block px-4 py-2 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            Menu
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 p-4 font-outfit">
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">shopping_cart</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Ventas</div>
+                            </a>
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">people</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Clientes</div>
+                            </a>
+
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">account_circle</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Perfil</div>
+                            </a>
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">settings</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Ajustes</div>
+                            </a>
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">inventory</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Productos</div>
+                            </a>
+
+                            <a class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">logout</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Salir</div>
+                            </a>
+
+
+                        </div>
+                    </div>
+
+                    <!-- Perfil -->
+                    <div class="flex items-center ml-3">
+                        <div>
+                            <button type="button"
+                                class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                                id="user-menu-button-2" aria-expanded="false" data-dropdown-toggle="dropdown-2">
+                                <span class="sr-only">Open user menu</span>
+                                <img class="w-8 h-8 rounded-full"
+                                    src="https://ui-avatars.com/api/?name=Papeleria+Angelito" alt="Avatar">
+
+                            </button>
+                        </div>
+                        <!-- Dropdown menu -->
+                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+                            id="dropdown-2">
+                            <div class="px-4 py-3" role="none">
+                                <p class="text-sm text-gray-900 dark:text-white" role="none">
+                                    Papeleria Angelito
+                                </p>
+                                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                                    papeleria.angel@gmail.com
+                                </p>
+                            </div>
+                            <ul class="py-1" role="none">
+                                <li>
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                                        role="menuitem">Inicio</a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                                        role="menuitem">Ajustes</a>
+                                </li>
+                                <li>
+                                    <a id="logout"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                                        role="menuitem">Salir</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside id="sidebar"
+        class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-64 h-full pt-16 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform duration-300 ease-in-out transform -translate-x-full md:block"
+        aria-label="Sidebar">
+
+        <div
+            class="relative flex flex-col flex-1 min-h-0 pt-0 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
+                <div
+                    class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                    <ul class="pb-2 space-y-2">
+
+                        <!--Inicio-->
+                        <li>
+                            <a href="./home.html"
+                                class="navigate-button flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500 font-outfit">home</span>
+                                <span class="ml-3">Inicio</span>
+                            </a>
+                        </li>
+
+                        <!--Ventas-->
+                        <li>
+                            <button type="button"
+                                class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                                aria-controls="dropdown-layouts" data-collapse-toggle="dropdown-layouts">
+                                <span class="material-icons text-slate-500">shopping_cart</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Ventas</span>
+                                <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <ul id="dropdown-layouts" class="hidden py-2 space-y-2">
+                                <li>
+                                    <a href="./ventas/ventas.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Nueva
+                                        venta</a>
+                                </li>
+                                <li>
+                                    <a href="./ventas/verVemtas.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Ver
+                                        ventas</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Productos -->
+                        <li>
+                            <a href="./productos/productos.html"
+                                class="navigate-button flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500">inventory</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap">Productos</span>
+                            </a>
+                        </li>
+
+                        <!--Clientes-->
+                        <li>
+                            <a href="./clientes/clientes.html"
+                                class="navigate-button flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500">people</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap"
+                                    sidebar-toggle-item>Clientes</span>
+                            </a>
+                        </li>
+
+
+                        <!--Usuarios-->
+                        <li>
+                            <button type="button"
+                                class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                                aria-controls="dropdown-auth" data-collapse-toggle="dropdown-auth">
+                                <span class="material-icons text-slate-500">lock</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Acceso</span>
+                                <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <ul id="dropdown-auth" class="hidden py-2 space-y-2">
+                                <li>
+                                    <a href="./usuarios/user.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Perfil
+                                        de usuario</a>
+                                </li>
+                                <li>
+                                    <a href="./usuarios/verUsers.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Ver
+                                        usuarios</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!--Ajustes-->
+                        <li>
+                            <a href="#"
+                                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500">settings</span>
+                                <span class="ml-3">Configuración</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- Spinner cierre de sesion -->
+    <div id="spinner-logout"
+        class="fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center">
+            <div role="status">
+                <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor" />
+                    <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill" />
+                </svg>
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spinner -->
+    <div id="spinner" class="fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-100 z-20 hidden">
+        <div class="flex items-center justify-center">
+            <div role="status">
+                <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor" />
+                    <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill" />
+                </svg>
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+
+    <main id="main-content" class="bg-zinc-50 flex-1 p-6 mt-16 transition-all duration-300 md:ml-0">
+
+        <div class="max-w-full mx-auto">
+            <h1 class="text-2xl font-jakarta mb-4">Resumen Financiero</h1>
+
+            <!-- Contenedor de cuadrícula que cambia según el tamaño de la pantalla -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 dark:text-white">
+                <!-- target widget Ingresos -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md h-full p-6 relative overflow-hidden w-full">
+                    <h3 class="text-base font-bold mb-2">Ingresos del día</h3>
+                    <h2 id="total-ventas" class="text-3xl font-bold mb-4"></h2>
+                    <!-- Mostrar los ingresos de ayer -->
+                    <div class="flex items-center justify-between w-full">
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                <path
+                                    d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                <path
+                                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                            </svg>
+                            <span id="ingresos-ayer" class="text-gray-900 dark:text-white font-bold"></span>
+                        </div>
+                        <!-- Mostrar el porcentaje de cambio -->
+                        <div id="porcentaje-cambio">
+                            <!-- Aquí se actualizará el porcentaje -->
+                        </div>
+                    </div>
+
+                    <!-- bg circle -->
+                    <div class="absolute -end-16 -top-16">
+                        <div class="bg-yellow-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10">
+                        </div>
+                    </div>
+                    <div class="absolute -end-4 -top-24">
+                        <div class="bg-yellow-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- target widget Semanal-->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md h-full p-6 relative overflow-hidden w-full">
+                    <h3 class="text-base font-bold mb-2">Venta semanal</h3>
+                    <h2 id="ventas-semanales" class="text-3xl font-bold mb-4"></h2>
+                    <!-- target -->
+                    <div class="flex items-center justify-between w-full">
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                <path
+                                    d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                <path
+                                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                            </svg>
+                            <span id="ventas-semana-pasada" class="text-gray-900 dark:text-white font-bold"></span>
+                        </div>
+                        <div id="porcentaje-cambio-semanal">
+                            0%
+                        </div>
+                    </div>
+
+                    <!-- bg circle -->
+                    <div class="absolute -end-16 -top-16">
+                        <div class="bg-green-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10">
+                        </div>
+                    </div>
+                    <div class="absolute -end-4 -top-24">
+                        <div class="bg-green-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- target widget Mensual -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md h-full p-6 relative overflow-hidden w-full">
+                    <h3 class="text-base font-bold mb-2">Venta del mes</h3>
+                    <!-- Venta del mes actual -->
+                    <h2 id="venta-mes-actual" class="text-3xl font-bold mb-4"></h2>
+                    <!-- target -->
+                    <div class="flex items-center justify-between w-full">
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                <path
+                                    d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                <path
+                                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                            </svg>
+                            <!-- Venta del mes pasado -->
+                            <span id="venta-mes-pasado" class="text-gray-900 dark:text-white font-bold"></span>
+                        </div>
+                        <!-- Porcentaje de cambio -->
+                        <div id="porcentaje-cambio-mes" class="text-red-500">
+                        </div>
+                    </div>
+
+                    <!-- bg circle -->
+                    <div class="absolute -end-16 -top-16">
+                        <div class="bg-pink-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10"></div>
+                    </div>
+                    <div class="absolute -end-4 -top-24">
+                        <div class="bg-pink-500 opacity-10 w-36 h-36 rounded-full shadow-lg shadow-indigo-500/10"></div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!--Gráficos-->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <!-- Gráfico de Compras -->
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h2 class="text-xl mb-4">Venta de los últimos 10 días</h2>
+                    <div id="ventasDiariasChart" style="height: 400px;"></div>
+                </div>
+                <!-- Gráfico de Ventas -->
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h2 class="text-xl mb-4">Venta en los últimos 12 meses</h2>
+                    <div id="ventasMensualesChart" style="height: 400px;"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-white dark:text-white py-6 border-t border-gray-200 dark:bg-gray-800 dark:border-gray-800">
+        <div class="container mx-auto px-4 xl:max-w-6xl">
+            <div class="flex flex-wrap justify-between items-center text-sm">
+                <div class="w-full lg:w-1/2 text-center lg:text-left">
+                    <ul class="flex flex-wrap justify-center lg:justify-start space-x-3">
+                        <li>
+                            <a class="hover:text-indigo-500" href="#">Soporte</a>
+                        </li>
+                        <li>
+                            <a class="hover:text-indigo-500" href="#">Centro de ayuda</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="w-full lg:w-1/2 text-center lg:text-right mt-3 lg:mt-0">
+                    <p class="mb-0">
+                        <a href="#" class="hover:text-indigo-500">Papelería Angelito</a> | All rights reserved
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script id="mount" type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            function actualizarGraficos() {
+                fetch('ventas_ultimos_10_dias.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Datos Ventas Diarias:', data);
+    
+                        const ventasDiariasOptions = {
+                            chart: {
+                                type: 'bar',
+                                height: 400
+                            },
+                            series: [{
+                                name: 'Ventas Diarias',
+                                data: data.totales
+                            }],
+                            xaxis: {
+                                categories: data.fechas
+                            },
+                            colors: ['#36a2eb'],
+                            yaxis: {
+                                title: {
+                                    text: 'Monto',
+                                    style: {
+                                        fontFamily: 'Jakarta, sans-serif'
+                                    }
+                                },
+                                min: 0,
+                                max: Math.max(...data.totales) + 1000
+                            },
+                            title: {
+                                text: 'Ventas en los últimos 10 días',
+                                align: 'center',
+                                style: {
+                                    fontFamily: 'Jakarta, sans-serif'
+                                }
+                            },
+                            dataLabels: {
+                                enabled: true,
+                                formatter: function (val) {
+                                    return val;
+                                },
+                                style: {
+                                    fontSize: '14px',
+                                    fontFamily: 'Jakarta, sans-serif'
+                                },
+                                offsetY: -10
+                            }
+                        };
+    
+                        const ventasDiariasChart = new ApexCharts(document.querySelector('#ventasDiariasChart'), ventasDiariasOptions);
+                        ventasDiariasChart.render();
+                    })
+                    .catch(error => console.error('Error al obtener los datos de ventas diarias:', error));
+    
+                // Actualiza el gráfico de ventas mensuales (últimos 12 meses)
+                fetch('ventas_ultimos_12_meses.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Datos Ventas Mensuales:', data);
+    
+                        const ventasMensualesOptions = {
+                            chart: {
+                                type: 'bar',
+                                height: 400
+                            },
+                            series: [{
+                                name: 'Ventas Mensuales',
+                                data: data.totales
+                            }],
+                            xaxis: {
+                                categories: data.meses
+                            },
+                            colors: ['#ff6384'],
+                            yaxis: {
+                                title: {
+                                    text: 'Monto',
+                                    style: {
+                                        fontFamily: 'Jakarta, sans-serif'
+                                    }
+                                },
+                                min: 0,
+                                max: Math.max(...data.totales) + 2000
+                            },
+                            title: {
+                                text: 'Ventas en los últimos 12 meses',
+                                align: 'center',
+                                style: {
+                                    fontFamily: 'Jakarta, sans-serif'
+                                }
+                            },
+                            dataLabels: {
+                                enabled: true,
+                                formatter: function (val) {
+                                    return val;
+                                },
+                                style: {
+                                    fontSize: '14px',
+                                    fontFamily: 'Jakarta, sans-serif'
+                                },
+                                offsetY: -10
+                            }
+                        };
+    
+                        const ventasMensualesChart = new ApexCharts(document.querySelector('#ventasMensualesChart'), ventasMensualesOptions);
+                        ventasMensualesChart.render();
+                    })
+                    .catch(error => console.error('Error al obtener los datos de ventas mensuales:', error));
+            }
+    
+            actualizarGraficos();
+        });
+    </script>
+    
+    
+</body>
+
+<script>
+    async function checkAuthentication() {
+        const response = await fetch('../check_session.php');
+        const data = await response.json();
+
+        if (!data.success) {
+            window.location.href = '../index.html';
+        }
+    }
+    window.onload = checkAuthentication;
+</script>
+<script src="./../assets/js/scripts.js"></script>
+<script>
+    document.getElementById('logout').addEventListener('click', function (event) {
+        event.preventDefault();
+
+        // Mostrar la alerta de confirmación
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Deseas cerrar sesión?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, cerrar sesión',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch('../logout.php')
+                    .then(response => {
+                        // Mostrar mensaje de éxito
+                        Swal.fire({
+                            title: 'Sesión cerrada',
+                            text: 'Tu sesión ha sido cerrada exitosamente.',
+                            icon: 'success',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Aceptar'
+                        }).then(() => {
+                            // Mostrar el spinner
+                            const spinner = document.getElementById('spinner-logout');
+                            spinner.classList.remove('hidden');
+
+                            setTimeout(() => {
+                                window.location.href = '../index.html';
+                            }, 1500);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error al cerrar sesión:', error);
+                    });
+            }
+        });
+    });
+</script>
+
+</html>

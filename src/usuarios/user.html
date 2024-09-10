@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../assets/img/favicon.png" type="image/x-icon">
+    <script src="../../assets/js/tailwindcss.js"></script>
+    <script src="../../assets/js/flowbite.min.js"></script>
+    <link rel="stylesheet" href="../../assets/css/material-icons.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <script src="../../assets/js/sweetalert2.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Jakarta+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+    <title>Papeleria Angel</title>
+</head>
+
+<body class="flex flex-col h-screen">
+    <!-- Capa de desenfoque -->
+    <div id="overlay"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 z-10 opacity-0 invisible transition-opacity duration-300 ease-in-out">
+    </div>
+
+    <nav class="fixed top-0 left-0 w-full z-40 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <div class="px-3 py-3 lg:px-5 lg:pl-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center justify-start">
+
+                    <a class="md:mr-24 items-center">
+                        <span
+                            class="self-center text-xl font-semibold sm:text-2xl text-blue-950 whitespace-nowrap dark:text-white">Papeleria
+                            Angel</span>
+                    </a>
+                    <!-- Botón para mostrar/ocultar el sidebar -->
+                    <button id="toggle-sidebar"
+                        class="ml-4 p-2 text-gray-900 rounded-md border-2 border-transparent transition-all duration-300 ease-in-out focus:border-slate-500 dark:text-white">
+                        <span id="icon"
+                            class="material-icons transition-transform duration-300 ease-in-out transform">menu_open</span>
+                    </button>
+
+                </div>
+                <div class="flex items-center">
+                    <!-- Menu -->
+                    <button type="button" data-dropdown-toggle="apps-dropdown"
+                        class="hidden p-2 text-gray-500 rounded-lg sm:flex hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700">
+
+                        <!-- Icon -->
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                            </path>
+                        </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div class="z-20 z-50 hidden max-w-sm my-4 overflow-hidden text-base list-none bg-white divide-y divide-gray-100 rounded shadow-lg dark:bg-gray-700 dark:divide-gray-600"
+                        id="apps-dropdown">
+                        <div
+                            class="block px-4 py-2 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            Menu
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 p-4 font-outfit">
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">shopping_cart</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Ventas</div>
+                            </a>
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">people</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Clientes</div>
+                            </a>
+
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">account_circle</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Perfil</div>
+                            </a>
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">settings</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Ajustes</div>
+                            </a>
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">inventory</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Productos</div>
+                            </a>
+
+                            <a href="#"
+                                class="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-icons text-slate-600">logout</span>
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">Salir</div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Perfil -->
+                    <div class="flex items-center ml-3">
+                        <div>
+                            <button type="button"
+                                class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                                id="user-menu-button-2" aria-expanded="false" data-dropdown-toggle="dropdown-2">
+                                <span class="sr-only">Open user menu</span>
+                                <img class="w-8 h-8 rounded-full"
+                                    src="https://ui-avatars.com/api/?name=Papeleria+Angelito" alt="Avatar">
+
+                            </button>
+                        </div>
+                        <!-- Dropdown menu -->
+                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+                            id="dropdown-2">
+                            <div class="px-4 py-3" role="none">
+                                <p class="text-sm text-gray-900 dark:text-white" role="none">
+                                    Papeleria Angelito
+                                </p>
+                                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                                    papeleria.angel@gmail.com
+                                </p>
+                            </div>
+                            <ul class="py-1" role="none">
+                                <li>
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                                        role="menuitem">Inicio</a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                                        role="menuitem">Ajustes</a>
+                                </li>
+                                <li>
+                                    <a id="logout"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                                        role="menuitem">Salir</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside id="sidebar"
+        class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-64 h-full pt-16 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform duration-300 ease-in-out transform -translate-x-full md:block"
+        aria-label="Sidebar">
+
+        <div
+            class="relative flex flex-col flex-1 min-h-0 pt-0 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
+                <div
+                    class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                    <ul class="pb-2 space-y-2">
+
+                        <!--Inicio-->
+                        <li>
+                            <a href="./../home.html"
+                                class="navigate-button flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500">home</span>
+                                <span class="ml-3">Inicio</span>
+                            </a>
+                        </li>
+
+                        <!--Ventas-->
+                        <li>
+                            <button type="button"
+                                class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                                aria-controls="dropdown-layouts" data-collapse-toggle="dropdown-layouts">
+                                <span class="material-icons text-slate-500">shopping_cart</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Ventas</span>
+                                <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <ul id="dropdown-layouts" class="py-2 space-y-2 hidden">
+                                <li>
+                                    <a href="../ventas/ventas.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Nueva
+                                        venta</a>
+                                </li>
+                                <li>
+                                    <a href="./../ventas/verVemtas.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Ver
+                                        ventas</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Productos -->
+                        <li>
+                            <a href="../productos/productos.html"
+                                class="navigate-button flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500">inventory</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap"
+                                    sidebar-toggle-item>Productos</span>
+                            </a>
+                        </li>
+
+                        <!--Clientes-->
+                        <li>
+                            <a href="../clientes/clientes.html"
+                                class="navigate-button flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500">people</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap"
+                                    sidebar-toggle-item>Clientes</span>
+                            </a>
+                        </li>
+
+                        <!--Usuarios-->
+                        <li>
+                            <button type="button"
+                                class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                                aria-controls="dropdown-auth" data-collapse-toggle="dropdown-auth">
+                                <span class="material-icons text-slate-500">lock</span>
+                                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Acceso</span>
+                                <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                            <ul id="dropdown-auth" class="py-2 space-y-2">
+                                <li>
+                                    <a href="../usuarios/user.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Perfil
+                                        de usuario</a>
+                                </li>
+                                <li>
+                                    <a href="../usuarios/verUsers.html"
+                                        class="navigate-button flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Ver
+                                        usuarios</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!--Ajustes-->
+                        <li>
+                            <a href="#"
+                                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                                <span class="material-icons text-slate-500">settings</span>
+                                <span class="ml-3">Configuración</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- Spinner cierre de sesion -->
+    <div id="spinner-logout"
+        class="fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center">
+            <div role="status">
+                <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor" />
+                    <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill" />
+                </svg>
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spinner -->
+    <div id="spinner" class="fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-100 z-20 hidden">
+        <div class="flex items-center justify-center">
+            <div role="status">
+                <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor" />
+                    <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill" />
+                </svg>
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <main id="dynamicContent" class="flex-1 p-6 mt-16 transition-all duration-300 ml-60 md:ml-0 overflow-x-hidden">
+
+
+
+        <div class="max-w-full mx-auto">
+            <!-- Ruta de navegación -->
+            <nav class="mb-4">
+                <ol class="list-reset flex text-gray-600 dark:text-gray-400 text-sm flex-wrap">
+                    <li>
+                        <a href="#" class="text-slate-600 hover:text-slate-700">Inicio</a>
+                    </li>
+                    <li>
+                        <span class="mx-2">/</span>
+                    </li>
+                    <li>
+                        <a href="#" class="text-slate-600 hover:text-slate-700">Acceso</a>
+                    </li>
+                    <li>
+                        <span class="mx-2">/</span>
+                    </li>
+                    <li class="text-gray-500 dark:text-gray-300">Perfil de usuario</li>
+                </ol>
+            </nav>
+
+            <div class="flex flex-col md:flex-row gap-6">
+                <!-- Perfil de usuario -->
+                <div
+                    class="w-full md:w-1/3 bg-white rounded-lg shadow-md p-6 flex flex-col justify-center items-center md:items-start">
+                    <h1 class="text-2xl mb-12 md:text-left">Configuración de usuario</h1>
+
+                    <div class="flex items-center mb-16">
+                        <img id="userImage" src="https://via.placeholder.com/100" alt="User Picture"
+                            class="w-24 h-24 rounded-full mr-4 object-cover">
+                        <div class="md:text-left">
+                            <h2 id="userName" class="text-xl font-semibold">Nombre Apellido</h2>
+                            <p id="userEmail" class="text-gray-600">Correo Electrónico</p>
+                        </div>
+                    </div>
+
+
+                    <p class="md:text-left mb-10">Gestiona tu negocio de forma fácil y segura. Gestionar una empresa no
+                        es tan fácil como lo es hoy. Podrás visualizar y gestionar todos los informes de una forma
+                        sencilla y práctica.</p>
+
+                    <!-- Formulario oculto para cargar la imagen -->
+                    <form id="uploadForm" enctype="multipart/form-data" method="POST" action="uploadImage.php"
+                        class="hidden">
+                        <input type="file" id="fileInput" name="profileImage" accept="image/*"
+                            onchange="previewAndUploadImage(event)">
+                    </form>
+
+                    <button id="changeImageButton" class="mt-4 bg-slate-500 text-white px-4 py-2 rounded-md"
+                        onclick="document.getElementById('fileInput').click();">Cambiar foto
+                    </button>
+                </div>
+
+                <!-- Información General -->
+                <div class="w-full md:w-2/3 bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-2">
+                        <h2 class="text-2xl mb-2 md:mb-0">Información General</h2>
+                        <input type="hidden" id="userId" value="">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="firstName" class="block text-sm font-medium text-gray-700">Nombres</label>
+                            <input id="firstName" type="text"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
+                        <div>
+                            <label for="lastName" class="block text-sm font-medium text-gray-700">Apellidos</label>
+                            <input id="lastName" type="text"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
+                        <div>
+                            <label for="country" class="block text-sm font-medium text-gray-700">País</label>
+                            <input id="country" type="text"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
+                        <div>
+                            <label for="city" class="block text-sm font-medium text-gray-700">Ciudad</label>
+                            <input id="city" type="text"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Teléfono</label>
+                            <input id="phone" type="tel"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
+                    </div>
+
+                    <!-- Sección para Correo y Contraseña -->
+                    <div class="flex flex-col md:flex-row gap-4 mt-4">
+                        <div class="flex-1">
+                            <label for="email" class="block text-sm font-medium text-gray-700">Correo</label>
+                            <input id="email" name="email" type="email"
+                                class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                            <p id="emailError"
+                                class="text-red-500 text-sm opacity-0 transition-opacity duration-500 mt-2">
+                                Por favor, ingrese un email válido.
+                            </p>
+                        </div>
+                        <div class="flex-1 relative">
+                            <div class="mt-">
+                                <input id="editPassword" type="checkbox" class="mr-2">
+                                <label for="editPassword" class="text-sm text-gray-700">Editar contraseña</label>
+                            </div>
+                            <div class="relative">
+                                <input id="passwordInput" type="password"
+                                    class="block w-full border border-gray-300 rounded-md p-2 pr-10" disabled value="">
+                                <button id="togglePassword" type="button"
+                                    class="absolute inset-y-0 right-0 flex items-center h-full px-2 text-gray-500"
+                                    onclick="togglePassword()">
+                                    <i id="passwordIcon" class="material-icons">visibility</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="saveButton"
+                        class="bg-slate-500 text-white px-8 py-2 rounded-md w-full md:w-auto mt-4">Guardar</button>
+                </div>
+
+                <script>
+                    document.getElementById('saveButton').addEventListener('click', function (event) {
+                        event.preventDefault();
+
+                        const id_usuario = document.getElementById('userId').value; // Obteniendo el id_usuario
+                        const firstName = document.getElementById('firstName') ? document.getElementById('firstName').value : '';
+                        const lastName = document.getElementById('lastName') ? document.getElementById('lastName').value : '';
+                        const country = document.getElementById('country') ? document.getElementById('country').value : '';
+                        const city = document.getElementById('city') ? document.getElementById('city').value : '';
+                        const phone = document.getElementById('phone') ? document.getElementById('phone').value : '';
+                        const email = document.getElementById('email') ? document.getElementById('email').value : '';
+                        const password = document.getElementById('editPassword').checked
+                            ? (document.getElementById('passwordInput') ? document.getElementById('passwordInput').value : '')
+                            : '';
+
+                        if (document.getElementById('editPassword').checked && password === '') {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Debe ingresar una contraseña si desea editarla.'
+                            });
+                            return;
+                        }
+
+                        fetch('update_user.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ id_usuario, firstName, lastName, country, city, phone, email, password })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Actualizado',
+                                        text: 'Los datos han sido actualizados correctamente.'
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: data.message || 'Hubo un problema al actualizar los datos.'
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'No se pudo conectar al servidor.'
+                                });
+                            });
+                    });
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const passwordInput = document.getElementById('passwordInput');
+                        if (passwordInput) {
+                            passwordInput.value = '';
+                        }
+
+                        document.getElementById('editPassword').addEventListener('change', function () {
+                            const passwordInput = document.getElementById('passwordInput');
+                            if (passwordInput) {
+                                if (this.checked) {
+                                    passwordInput.disabled = false;
+                                } else {
+                                    passwordInput.disabled = true;
+                                }
+                            }
+                        });
+                    });
+
+                    function togglePassword() {
+                        const passwordInput = document.getElementById('passwordInput');
+                        const passwordIcon = document.getElementById('passwordIcon');
+
+                        if (passwordInput.type === 'password') {
+                            passwordInput.type = 'text';
+                            passwordIcon.textContent = 'visibility_off';
+                        } else {
+                            passwordInput.type = 'password';
+                            passwordIcon.textContent = 'visibility';
+                        }
+                    }
+                </script>
+
+
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-white dark:text-white py-6 border-t border-gray-200 dark:bg-gray-800 dark:border-gray-800">
+        <div class="container mx-auto px-4 xl:max-w-6xl">
+            <div class="flex flex-wrap justify-between items-center text-sm">
+                <div class="w-full lg:w-1/2 text-center lg:text-left">
+                    <ul class="flex flex-wrap justify-center lg:justify-start space-x-3">
+                        <li>
+                            <a class="hover:text-indigo-500" href="#">Soporte</a>
+                        </li>
+                        <li>
+                            <a class="hover:text-indigo-500" href="#">Centro de ayuda</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="w-full lg:w-1/2 text-center lg:text-right mt-3 lg:mt-0">
+                    <p class="mb-0">
+                        <a href="../landing.html" class="hover:text-indigo-500">Papelería A.</a> | All rights reserved
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function checkAccess() {
+                fetch('../../validarRol.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'error') {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Acceso denegado',
+                                text: data.message
+                            }).then(() => {
+                                window.location.href = '../home.html';
+                            });
+                        } else {
+                            console.log('Acceso concedido');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error al verificar el rol:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Hubo un problema al verificar el acceso.'
+                        });
+                    });
+            }
+            checkAccess();
+        });
+    </script>
+
+    <script src="../../assets/js/logout.js"></script>
+    <script src="../../assets/js/Authentication.js"></script>
+    <script src="../../assets/js/uploadImage.js"></script>
+    <script src="../../assets/js/validarCorreo.js"></script>
+    <script src="../../assets/js/togglePassword.js"></script>
+    <script src="../../assets/js/loadProfileUser.js"></script>
+    <script src="../../assets/js/scripts.js"></script>
+    <script src="./../../assets/js/loadModal.js"></script>
+</body>
+
+</html>
