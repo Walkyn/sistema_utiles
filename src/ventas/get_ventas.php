@@ -1,6 +1,12 @@
 <?php
 include '../../conexion.php';
 
+// Verificar la conexión
+if (!$conn) {
+    echo json_encode(['error' => 'No se pudo conectar a la base de datos.']);
+    exit;
+}
+
 header('Content-Type: application/json');
 
 if ($conn->connect_error) {

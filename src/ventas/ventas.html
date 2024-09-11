@@ -501,141 +501,142 @@
 
     <!--script 1 -->
     <script>
-        document.getElementById('submitBtn').addEventListener('click', function (event) {
-            event.preventDefault();
+document.getElementById('submitBtn').addEventListener('click', function (event) {
+    event.preventDefault();
 
-            const now = new Date();
+    const now = new Date();
 
-            // Obtener componentes de la fecha y hora local
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
+    // Obtener componentes de la fecha y hora local
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
 
-            const localDate = `${year}-${month}-${day}`;
-            const localTime = `${hours}:${minutes}:${seconds}`;
+    const localDate = `${year}-${month}-${day}`;
+    const localTime = `${hours}:${minutes}:${seconds}`;
 
-            console.log('Fecha de venta:', localDate);
-            console.log('Hora de venta:', localTime);
+    console.log('Fecha de venta:', localDate);
+    console.log('Hora de venta:', localTime);
 
-            // Obtener datos del formulario
-            const clientId = document.getElementById('idCliente').textContent.trim();
-            const subTotal = parseFloat(document.getElementById('subTotal').textContent.replace('$', ''));
-            const descuento = parseFloat(document.getElementById('descuento').value) || 0;
-            const total = parseFloat(document.getElementById('total').textContent.replace('$', ''));
+    // Obtener datos del formulario
+    const clientId = document.getElementById('idCliente').textContent.trim();
+    const subTotal = parseFloat(document.getElementById('subTotal').textContent.replace('$', '').trim()) || 0;
+    const descuento = parseFloat(document.getElementById('descuento').value) || 0;
+    const total = parseFloat(document.getElementById('total').textContent.replace('$', '').trim()) || 0;
 
-            // Obtener productos de la tabla
-            const productsTable = document.getElementById('ventasTable').getElementsByTagName('tbody')[0];
-            const rows = productsTable.getElementsByTagName('tr');
-            const products = [];
-            let totalArticulos = 0;
+    console.log('total', total);
+    // Obtener productos de la tabla
+    const productsTable = document.getElementById('ventasTable').getElementsByTagName('tbody')[0];
+    const rows = productsTable.getElementsByTagName('tr');
+    const products = [];
+    let totalArticulos = 0;
 
-            console.log('Códigos de productos en la tabla de ventas:');
+    console.log('Códigos de productos en la tabla de ventas:');
 
-            for (let i = 0; i < rows.length; i++) {
-                const codigo = rows[i].getAttribute('data-codigo-producto');
-                const cantidad = parseInt(rows[i].getElementsByClassName('cantidad')[0].textContent.trim());
-                const precio = parseFloat(rows[i].getElementsByClassName('total')[0].textContent.replace('$', '').trim());
+    for (let i = 0; i < rows.length; i++) {
+        const codigo = rows[i].getAttribute('data-codigo-producto');
+        const cantidad = parseInt(rows[i].getElementsByClassName('cantidad')[0].textContent.trim());
+        const precio = parseFloat(rows[i].getElementsByClassName('total')[0].textContent.replace('$', '').trim());
 
-                const product = {
-                    codigo,
-                    descripcion: rows[i].getElementsByTagName('td')[1].textContent.trim(),
-                    cantidad,
-                    precio
-                };
-                products.push(product);
-                totalArticulos += cantidad;
-            }
+        const product = {
+            codigo,
+            descripcion: rows[i].getElementsByTagName('td')[1].textContent.trim(),
+            cantidad,
+            precio
+        };
+        products.push(product);
+        totalArticulos += cantidad;
+    }
 
-            // Verificar si hay productos en la tabla
-            if (products.length === 0) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Advertencia',
-                    text: 'No hay productos en el Ticket.'
-                });
-                return;
-            }
+    // Verificar si hay productos en la tabla
+    if (products.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Advertencia',
+            text: 'No hay productos en el Ticket.'
+        });
+        return;
+    }
 
-            // Preparar el cliente para la venta
-            const saleClientId = clientId || null;
+    // Preparar el cliente para la venta
+    const saleClientId = clientId || null; // Asegúrate de usar 'saleClientId' que es la variable correcta aquí
 
-            // Enviar datos al servidor mediante fetch para guardar la venta
-            fetch('guardar_venta.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    clientId: saleClientId,
-                    subTotal,
-                    descuento,
-                    total,
-                    articulos: totalArticulos,
-                    products,
-                    fechaVenta: localDate,
-                    horaVenta: localTime
+    // Enviar datos al servidor mediante fetch para guardar la venta
+    fetch('guardar_venta.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            clientId: saleClientId,
+            subTotal,
+            descuento,
+            total,
+            articulos: totalArticulos,
+            products,
+            fechaVenta: localDate,
+            horaVenta: localTime
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Actualizar stock
+                fetch('update_stock.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ventaId: data.ventaId,
+                        products
+                    })
                 })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Actualizar stock
-                        fetch('update_stock.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                ventaId: data.ventaId,
-                                products
-                            })
-                        })
-                            .then(response => response.json())
-                            .then(stockUpdateData => {
-                                if (stockUpdateData.success) {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Éxito',
-                                        text: 'Venta registrada exitosamente'
-                                    }).then(() => {
-                                        window.location.href = 'ventas.html';
-                                    });
-                                } else {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Error',
-                                        text: 'Error al actualizar el stock: ' + stockUpdateData.message
-                                    });
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error al actualizar el stock:', error);
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error',
-                                    text: 'Error al actualizar el stock'
-                                });
+                    .then(response => response.json())
+                    .then(stockUpdateData => {
+                        if (stockUpdateData.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Éxito',
+                                text: 'Venta registrada exitosamente'
+                            }).then(() => {
+                                window.location.href = 'ventas.html';
                             });
-                    } else {
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Error al actualizar el stock: ' + stockUpdateData.message
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error al actualizar el stock:', error);
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: 'Error al guardar la venta: ' + data.message
+                            text: 'Error al actualizar el stock'
                         });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Error al realizar la solicitud'
                     });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al guardar la venta: ' + data.message
                 });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al realizar la solicitud'
+            });
         });
+});
 
     </script>
 
